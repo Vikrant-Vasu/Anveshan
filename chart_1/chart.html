@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <div>
+
+
+        <label for="chartInput">Enter the Values :</label>
+        <input style="margin-top: 30px; padding: 10px;" type="text" id="chartInput"><br><br>
+        <button style="padding: 10px; margin-left: 117px;" id="valuesButton" onclick="updateChart()">Submit </button>
+        <button style="padding: 10px; margin-left: 10px;" id="convertToPie" onclick="convertPie()">Pie</button>
+        <button style="padding: 10px; margin-left: 10px;" id="convertToDoughnut" onclick="convertDoughnut()">Doughnut</button>
+        <button style="padding: 10px; margin-left: 10px;" id="convertToLine" onclick="convertLine()">Line</button>
+        <button style="padding: 10px; margin-left: 10px;" id="convertToPolar" onclick="convertPolar()">Polar</button>
+        
+
+    </div>
+
+
+    <div style="width: 1000px">
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+
+        const myChartLabels = ['voilet', 'indigo', 'blue', 'green', 'yellow', 'orange', 'red'];
+        let myChartData = [];
+        let myChart;
+
+        function createChart(type) {
+            myChart = new Chart('myChart', {
+                type: type,
+                data: {
+                    labels: myChartLabels,
+                    datasets: [{
+                        label: 'no. of Votes',
+                        data: myChartData,
+                        borderWidth: 4,
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        createChart('bar'); // Default chart type is bar
+
+        // Conversion to pie
+        function convertPie() {
+            myChart.destroy(); 
+            createChart('pie'); 
+        }
+
+        // Conversion to doughnut
+        function convertDoughnut() {
+            myChart.destroy(); 
+            createChart('doughnut'); 
+        }
+
+        // Conversion to line
+        function convertLine() {
+
+            myChart.destroy(); 
+            createChart('line');           
+        }
+
+        // Conversion to polar
+        function convertPolar() {
+            myChart.destroy(); 
+            createChart('polarArea'); 
+        }
+
+        function updateChart() {
+
+            let chartInput = document.getElementById('chartInput').value;
+            myChartData.push(chartInput);
+            myChart.update();
+            document.getElementById('chartInput').value = "";
+
+        }
+
+    </script>
+
+</body>
+
+</html>
